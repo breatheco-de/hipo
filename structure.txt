@@ -1,0 +1,18 @@
+.
+├── .env
+├── check_redis_container.sh
+├── main.py
+├── readme.md
+├── src
+│   ├── __init__.py
+│   ├── pipelines
+│   │   └── create_live_documents
+│   │       └── run.py
+│   ├── services
+│   │   └── redis_manager.py
+│   └── utils
+│       ├── breathecode.py
+│       ├── create_project_structure.py
+│       ├── printer.py
+│       └── reporter.py
+└── structure.txt

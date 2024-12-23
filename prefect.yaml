@@ -1,0 +1,55 @@
+# Welcome to your prefect.yaml file! You can use this file for storing and managing
+# configuration for deploying your flows. We recommend committing this file to source
+# control along with your flow code.
+
+# Generic metadata about this project
+name: hypo
+prefect-version: 3.1.9
+
+# build section allows you to manage and build docker images
+build:
+
+# push section allows you to manage if and how this project is uploaded to remote locations
+push:
+
+# pull section allows you to provide instructions for cloning this project in remote locations
+pull:
+- prefect.deployments.steps.set_working_directory:
+    directory: C:\Users\LEGION\Projects\jobs\4geeks\hypo
+
+# the deployments section allows you to provide configuration for deploying flows
+deployments:
+# - name: hello-world
+#   version:
+#   tags: []
+#   description:
+#   entrypoint: src/pipelines/hello_world/run.py:hello_world
+#   parameters: {}
+#   work_pool:
+#     name: my-work-pool
+#     work_queue_name:
+#     job_variables: {}
+#   concurrency_limit:
+#   enforce_parameter_schema: true
+#   schedules:
+#   - interval: 60.0
+#     anchor_date: '2024-12-23T10:03:57.690356+00:00'
+#     timezone: UTC
+#     active: true
+- name: create-live-documents
+  version:
+  tags: []
+  description:
+  entrypoint: src/pipelines/create_live_documents/run.py:create_live_documents_flow
+  parameters: {}
+  work_pool:
+    name: my-work-pool
+    work_queue_name:
+    job_variables: {}
+  concurrency_limit:
+  enforce_parameter_schema: true
+  schedules:
+  - interval: 86400.0
+    anchor_date: '2024-12-23T10:27:34.959684+00:00'
+    timezone: UTC
+    active: true
