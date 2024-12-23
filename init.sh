@@ -41,7 +41,11 @@ prefect server start &
 PREFECT_SERVER_PID=$!
 echo -e "${GREEN}Prefect Server corriendo en PID $PREFECT_SERVER_PID${NC}"
 
-# 4. Iniciar el worker de Prefect
+# 4. Esperar 5 segundos antes de iniciar el worker de Prefect
+echo -e "${GREEN}Esperando 5 segundos antes de iniciar el worker de Prefect...${NC}"
+sleep 5
+
+# 5. Iniciar el worker de Prefect
 echo -e "${GREEN}Iniciando worker de Prefect...${NC}"
 prefect worker start --pool 'my-work-pool' &
 PREFECT_WORKER_PID=$!
