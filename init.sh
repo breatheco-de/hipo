@@ -29,6 +29,10 @@ else
     echo -e "${GREEN}Entorno virtual activado: $VIRTUAL_ENV${NC}"
 fi
 
+# 1. Fix directory
+echo -e "${GREEN}Fixing directory...${NC}"
+python src/utils/fix_directory.py
+
 # 2. Iniciar el servidor de FastAPI
 echo -e "${GREEN}Iniciando servidor FastAPI...${NC}"
 uvicorn main:app --host 0.0.0.0 --port 8000 &
