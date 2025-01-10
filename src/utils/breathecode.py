@@ -2,17 +2,42 @@ import requests
 from dotenv import load_dotenv
 import os
 
+
+FOUR_GEEKS_WEB_HOST = "https://4geeks.com"
+"""
+const connectorsDict = {
+  EVENT: 'workshops',
+  LESSON: 'lesson',
+  EXERCISE: 'interactive-exercise',
+  PROJECT: 'interactive-coding-tutorial',
+  ARTICLE: 'how-to',
+};
+"""
+
 load_dotenv()
 
+
 def get_academy_technologies():
-    
+
     endpoint = f"https://breathecode.herokuapp.com/v1/registry/academy/technology"
     headers = {
         "Authorization": f"Token {os.getenv('BREATHECODE_PERMANENT_TOKEN')}",
-        "Academy": os.getenv("ACADEMY_ID")
+        "Academy": os.getenv("ACADEMY_ID"),
     }
     response = requests.get(endpoint, headers=headers)
     return response.json()
+
+
+def make_url(asset_type: str, asset_slug: str):
+    connectorsDict = {
+        "EVENT": "workshops",
+        "LESSON": "lesson",
+        "EXERCISE": "interactive-exercise",
+        "PROJECT": "interactive-coding-tutorial",
+        "ARTICLE": "how-to",
+    }
+
+    return f"{FOUR_GEEKS_WEB_HOST}/{connectorsDict[asset_type]}/{asset_slug}"
 
 
 def get_technology_assets(technology: str):
@@ -25,11 +50,10 @@ def get_technology_assets(technology: str):
 
 
 def get_ai_context(asset_id: str):
-    endpoint= f"https://breathecode.herokuapp.com/v1/registry/asset/{asset_id}/context"
+    endpoint = f"https://breathecode.herokuapp.com/v1/registry/asset/{asset_id}/context"
     headers = {
         "Authorization": f"Token {os.getenv('BREATHECODE_PERMANENT_TOKEN')}",
-        "academy_id": os.getenv("ACADEMY_ID")
+        "academy_id": os.getenv("ACADEMY_ID"),
     }
     response = requests.get(endpoint, headers=headers)
     return response.json()
-

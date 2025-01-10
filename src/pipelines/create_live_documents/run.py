@@ -1,13 +1,17 @@
-from src.utils.breathecode import get_technology_assets, get_ai_context, get_academy_technologies
+from src.utils.breathecode import (
+    get_technology_assets,
+    get_ai_context,
+    get_academy_technologies,
+    make_url,
+)
 from src.utils.printer import Printer
 from src.services.redis_manager import redis_manager
 from prefect import task, flow
 
-config = {
-    "identificator": "exercises-{technology}"
-}
+config = {"identificator": "exercises-{technology}"}
 
 printer = Printer(__file__)
+
 
 @task
 def create_live_documents(technology: str):
@@ -24,19 +28,18 @@ def create_live_documents(technology: str):
     for asset in assets:
         ai_context = get_ai_context(asset["id"])
         ai_context = ai_context["ai_context"]
-        live_document_text += f"""\n
-<asset>
-ASSET: {asset["title"]}
-SLUG: {asset["slug"]}
-LANGUAGE: {asset["lang"]}
-DESCRIPTION: {asset["description"]}
+        live_document_text += f"""
 
+<asset>
+ID: {asset["id"]}
+TITLE: {asset["title"]}
+SLUG: {asset["slug"]}
+URL: {make_url("EXERCISE", asset["slug"])}
 BRIEF:
 '''
 {ai_context}
 '''
 </asset>
-\n
 """
 
     if len(live_document_text) == 0:
@@ -44,7 +47,10 @@ BRIEF:
     else:
         identificator = config["identificator"].replace("{technology}", technology)
         redis_manager.set(identificator, live_document_text)
-        printer.green(f"Live document for {technology} created in redis using key {identificator}")
+        printer.green(
+            f"Live document for {technology} created in redis using key {identificator}"
+        )
+
 
 @task
 def decide_technologies():
@@ -56,12 +62,13 @@ def decide_technologies():
 
     return priorities
 
+
 @flow
 def create_live_documents_flow():
     priorities = decide_technologies()
     for priority in priorities:
         create_live_documents(priority)
 
+
 if __name__ == "__main__":
     create_live_documents_flow()
-
