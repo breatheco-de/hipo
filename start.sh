@@ -47,7 +47,7 @@ echo -e "${GREEN}FastAPI corriendo en PID $FASTAPI_PID${NC}"
 
 # 3. Iniciar el servidor de Prefect con nohup
 echo -e "${GREEN}Iniciando servidor de Prefect...${NC}"
-nohup prefect server start > prefect_server.log 2>&1 &
+nohup prefect server start --host 0.0.0.0 > prefect_server.log 2>&1 &
 PREFECT_SERVER_PID=$!
 echo $PREFECT_SERVER_PID >> $PID_FILE
 echo -e "${GREEN}Prefect Server corriendo en PID $PREFECT_SERVER_PID${NC}"
