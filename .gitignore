@@ -8,8 +8,12 @@ __pycache__
 .DS_Store
 
 hypo.pem
+HypoKeys.pem
 
 fastapi.log
 prefect_server.log
 prefect_worker.log
 
+ssh.command
+
+pids.txt

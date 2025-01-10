@@ -73,3 +73,4 @@ echo -e "${GREEN}Los PIDs han sido guardados en el archivo: $PID_FILE${NC}"
 # Mantener el script corriendo para monitorear procesos
 echo -e "${GREEN}Presiona Ctrl+C para detener este script. Los procesos seguirán corriendo en segundo plano.${NC}"
 wait
+clear
