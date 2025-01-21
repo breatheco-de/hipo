@@ -8,7 +8,7 @@ from src.utils.printer import Printer
 from src.services.redis_manager import redis_manager
 from prefect import task, flow
 
-config = {"identificator": "exercises-{technology}"}
+config = {"identificator": "exercises-{technology}", "separator": "---SEPARATOR---"}
 
 printer = Printer(__file__)
 
@@ -29,17 +29,15 @@ def create_live_documents(technology: str):
         ai_context = get_ai_context(asset["id"])
         ai_context = ai_context["ai_context"]
         live_document_text += f"""
-
-<asset>
-ID: {asset["id"]}
-TITLE: {asset["title"]}
+# {asset["title"]}
 SLUG: {asset["slug"]}
 URL: {make_url("EXERCISE", asset["slug"])}
-BRIEF:
+Content:
 '''
 {ai_context}
 '''
-</asset>
+
+{config["separator"]}
 """
 
     if len(live_document_text) == 0:

@@ -44,6 +44,7 @@ nohup uvicorn main:app --host 0.0.0.0 --port 8000 > fastapi.log 2>&1 &
 FASTAPI_PID=$!
 echo $FASTAPI_PID >> $PID_FILE
 echo -e "${GREEN}FastAPI corriendo en PID $FASTAPI_PID${NC}"
+echo -e "${GREEN}Puedes ver el servidor en: http://localhost:8000${NC}"
 
 # 3. Iniciar el servidor de Prefect con nohup
 echo -e "${GREEN}Iniciando servidor de Prefect...${NC}"
@@ -51,6 +52,7 @@ nohup prefect server start --host 0.0.0.0 > prefect_server.log 2>&1 &
 PREFECT_SERVER_PID=$!
 echo $PREFECT_SERVER_PID >> $PID_FILE
 echo -e "${GREEN}Prefect Server corriendo en PID $PREFECT_SERVER_PID${NC}"
+echo -e "${GREEN}Puedes ver el servidor en: http://localhost:4200${NC}"
 
 # 4. Esperar 5 segundos antes de iniciar el worker de Prefect
 echo -e "${GREEN}Esperando 5 segundos antes de iniciar el worker de Prefect...${NC}"
