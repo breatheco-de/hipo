@@ -40,7 +40,8 @@ python src/utils/fix_directory.py
 
 # 2. Configurar PREFECT_API_URL
 echo -e "${GREEN}Configurando PREFECT_API_URL...${NC}"
-export PREFECT_API_URL="http://127.0.0.1:8555"
+export PREFECT_API_URL="http://0.0.0.0:4200/api"
+
 echo -e "${GREEN}PREFECT_API_URL configurado como: $PREFECT_API_URL${NC}"
 
 # 3. Iniciar el servidor de FastAPI con nohup
