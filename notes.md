@@ -6,3 +6,7 @@
 
 3. To stop a work pool:
    prefect work-pool stop 'my-work-pool'
+
+4. To run a deployment:
+   prefect deployment run 'my-deployment'
+
