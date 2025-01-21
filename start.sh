@@ -38,7 +38,12 @@ fi
 echo -e "${GREEN}Fixing directory...${NC}"
 python src/utils/fix_directory.py
 
-# 2. Iniciar el servidor de FastAPI con nohup
+# 2. Configurar PREFECT_API_URL
+echo -e "${GREEN}Configurando PREFECT_API_URL...${NC}"
+export PREFECT_API_URL="http://127.0.0.1:8555"
+echo -e "${GREEN}PREFECT_API_URL configurado como: $PREFECT_API_URL${NC}"
+
+# 3. Iniciar el servidor de FastAPI con nohup
 echo -e "${GREEN}Iniciando servidor FastAPI...${NC}"
 nohup uvicorn main:app --host 0.0.0.0 --port 8000 > fastapi.log 2>&1 &
 FASTAPI_PID=$!
@@ -46,7 +51,7 @@ echo $FASTAPI_PID >> $PID_FILE
 echo -e "${GREEN}FastAPI corriendo en PID $FASTAPI_PID${NC}"
 echo -e "${GREEN}Puedes ver el servidor en: http://localhost:8000${NC}"
 
-# 3. Iniciar el servidor de Prefect con nohup
+# 4. Iniciar el servidor de Prefect con nohup
 echo -e "${GREEN}Iniciando servidor de Prefect...${NC}"
 nohup prefect server start --host 0.0.0.0 > prefect_server.log 2>&1 &
 PREFECT_SERVER_PID=$!
@@ -54,11 +59,11 @@ echo $PREFECT_SERVER_PID >> $PID_FILE
 echo -e "${GREEN}Prefect Server corriendo en PID $PREFECT_SERVER_PID${NC}"
 echo -e "${GREEN}Puedes ver el servidor en: http://localhost:4200${NC}"
 
-# 4. Esperar 5 segundos antes de iniciar el worker de Prefect
+# 5. Esperar 5 segundos antes de iniciar el worker de Prefect
 echo -e "${GREEN}Esperando 5 segundos antes de iniciar el worker de Prefect...${NC}"
 sleep 5
 
-# 5. Iniciar el worker de Prefect con nohup
+# 6. Iniciar el worker de Prefect con nohup
 echo -e "${GREEN}Iniciando worker de Prefect...${NC}"
 nohup prefect worker start --pool 'my-work-pool' > prefect_worker.log 2>&1 &
 PREFECT_WORKER_PID=$!
