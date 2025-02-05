@@ -28,7 +28,12 @@ def get_academy_technologies():
     return response.json()
 
 
-def make_url(asset_type: str, asset_slug: str):
+def is_not_english(language: str):
+    return language != "us" and language != "en"
+
+
+def make_url(asset_type: str, asset_slug: str, language: str = "us"):
+
     connectorsDict = {
         "EVENT": "workshops",
         "LESSON": "lesson",
@@ -37,14 +42,19 @@ def make_url(asset_type: str, asset_slug: str):
         "ARTICLE": "how-to",
     }
 
-    return f"{FOUR_GEEKS_WEB_HOST}/{connectorsDict[asset_type]}/{asset_slug}"
+    language_section = ""
+    if is_not_english(language):
+        language_section = f"{language}/"
+
+    return f"{FOUR_GEEKS_WEB_HOST}/{language_section}{connectorsDict[asset_type]}/{asset_slug}"
 
 
 def get_technology_assets(technology: str):
     TECHNOLOGY_FILTER = f"?technologies={technology}"
     ASSET_TYPE_FILTER = "&asset_type=EXERCISE"
     VISIBILITY_FILTER = "&visibility=PUBLIC"
-    endpoint = f"https://breathecode.herokuapp.com/v1/registry/asset{TECHNOLOGY_FILTER}{ASSET_TYPE_FILTER}{VISIBILITY_FILTER}"
+    LANGUAGE_FILTER = "&language=en"
+    endpoint = f"https://breathecode.herokuapp.com/v1/registry/asset{TECHNOLOGY_FILTER}{ASSET_TYPE_FILTER}{VISIBILITY_FILTER}{LANGUAGE_FILTER}"
     response = requests.get(endpoint)
     return response.json()
 

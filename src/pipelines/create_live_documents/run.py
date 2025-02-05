@@ -22,20 +22,45 @@ def create_live_documents(technology: str):
         printer.red(f"No assets found for technology {technology}")
         return
 
-    asset_ids = [asset["id"] for asset in assets]
-
+    # printer.yellow(f"EXAMPLE ASSET FOR TECH: {technology}:", assets[0])
     # Get the ai context for the first asset
     for asset in assets:
         ai_context = get_ai_context(asset["id"])
         ai_context = ai_context["ai_context"]
+        translations = asset.get("translations", {})
+        available_languages = list(translations.keys())
+        # Ignore the us translation
+        available_languages = [
+            language for language in available_languages if language != "us"
+        ]
+
+        translations_text = ""
+        for language in available_languages:
+            url = make_url("EXERCISE", asset["translations"][language], language)
+           
+            translations_text += f'- {language}: <a href="{url}">{url}</a>\n'
+
+        english_url = make_url("EXERCISE", asset["slug"])
+        translations_text += f'- us: <a href="{english_url}">{english_url}</a>\n'
         live_document_text += f"""
-# {asset["title"]}
-SLUG: {asset["slug"]}
-URL: {make_url("EXERCISE", asset["slug"])}
-Content:
-'''
+<ASSET>
+
+<TITLE>
+{asset["title"]}
+</TITLE>
+<SLUG>
+{asset["slug"]}
+</SLUG>
+<URLS>
+{translations_text}
+</URLS>
+</ASSET>
+
+
+
+<AI CONTEXT>
 {ai_context}
-'''
+</AI CONTEXT>
 
 {config["separator"]}
 """
