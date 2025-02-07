@@ -53,8 +53,8 @@ def get_technology_assets(technology: str):
     TECHNOLOGY_FILTER = f"?technologies={technology}"
     ASSET_TYPE_FILTER = "&asset_type=EXERCISE"
     VISIBILITY_FILTER = "&visibility=PUBLIC"
-    LANGUAGE_FILTER = "&language=en"
-    endpoint = f"https://breathecode.herokuapp.com/v1/registry/asset{TECHNOLOGY_FILTER}{ASSET_TYPE_FILTER}{VISIBILITY_FILTER}{LANGUAGE_FILTER}"
+
+    endpoint = f"https://breathecode.herokuapp.com/v1/registry/asset{TECHNOLOGY_FILTER}{ASSET_TYPE_FILTER}{VISIBILITY_FILTER}"
     response = requests.get(endpoint)
     return response.json()
 

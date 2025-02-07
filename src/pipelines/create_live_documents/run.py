@@ -29,21 +29,25 @@ def create_live_documents(technology: str):
         ai_context = ai_context["ai_context"]
         translations = asset.get("translations", {})
         available_languages = list(translations.keys())
-        # Ignore the us translation
+
+        # Ignore the current language
         available_languages = [
-            language for language in available_languages if language != "us"
+            language for language in available_languages if language != asset["lang"]
         ]
 
         translations_text = ""
         for language in available_languages:
             url = make_url("EXERCISE", asset["translations"][language], language)
-           
+
             translations_text += f'- {language}: <a href="{url}">{url}</a>\n'
 
-        english_url = make_url("EXERCISE", asset["slug"])
-        translations_text += f'- us: <a href="{english_url}">{english_url}</a>\n'
+        original_url = make_url("EXERCISE", asset["slug"], asset["lang"])
+        translations_text += (
+            f'- {asset["lang"]}: <a href="{original_url}">{original_url}</a>\n'
+        )
         live_document_text += f"""
 <ASSET>
+
 
 <TITLE>
 {asset["title"]}
