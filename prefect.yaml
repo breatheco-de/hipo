@@ -53,3 +53,20 @@ deployments:
     anchor_date: '2024-12-23T10:27:34.959684+00:00'
     timezone: UTC
     active: true
+- name: create-certifications
+  version:
+  tags: []
+  description:
+  entrypoint: src/pipelines/certifications/run.py:create_certifications_flow
+  parameters: {}
+  work_pool:
+    name: my-work-pool
+    work_queue_name:
+    job_variables: {}
+  concurrency_limit:
+  enforce_parameter_schema: true
+  schedules:
+  - interval: 86400.0
+    anchor_date: '2024-12-23T10:27:34.959684+00:00'
+    timezone: UTC
+    active: true

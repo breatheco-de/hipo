@@ -67,3 +67,13 @@ def get_ai_context(asset_id: str):
     }
     response = requests.get(endpoint, headers=headers)
     return response.json()
+
+
+def get_specialties():
+
+    endpoint = f"https://breathecode.herokuapp.com/v1/certificate/specialty"
+    headers = {
+        "Authorization": f"Token {os.getenv('BREATHECODE_PERMANENT_TOKEN')}",
+    }
+    response = requests.get(endpoint, headers=headers)
+    return response.json()

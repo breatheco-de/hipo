@@ -70,6 +70,12 @@ This command will take the prefect.yaml file and deploy the workflows to the Pre
 
 After running the previous step, prefect will give you the command to run inmediately the workflow.
 
+Example:
+
+```bash
+prefect deployment run 'create-live-documents-flow/create-live-documents'
+```
+
 ### 6. Check the logs
 
 Check the console or the prefect UI and verify that the deployment was created successfully and is up and running.
