@@ -73,7 +73,7 @@ python-multipart==0.0.20
 python-slugify==8.0.4
 python-socks==2.5.3
 pytz==2024.2
-pywin32==308
+pywin32==308 ; sys_platform == "win32"
 PyYAML==6.0.2
 readchar==4.2.1
 redis==5.2.1
